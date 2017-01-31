@@ -2,18 +2,18 @@
 import { assert } from "chai";
 
 // Project imports
-import { DemoDataService } from "./demo-data.service";
+import { JobDataService } from "./job-data.service";
 import { Observable } from "rxjs";
 
-describe("DemoDataService", () => {
-  let demoDataService: DemoDataService;
+describe("JobDataService", () => {
+  let jobDataService: JobDataService;
 
   beforeEach(() => {
     // Create the service instance
-    demoDataService = new DemoDataService();
+    jobDataService = new JobDataService();
   });
 
   it("Should return Observable when requesting the data", () => {
-    assert.isTrue(demoDataService.getData() instanceof Observable);
+    assert.isTrue(jobDataService.getData() instanceof Observable);
   });
 });

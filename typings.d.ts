@@ -3,6 +3,8 @@
 /// <reference types="@types/underscore" />
 /// <reference types="@types/chai" />
 /// <reference types="@types/mocha" />
+/// <reference path="typings/meteor.d.ts" />
+/// <reference path="typings/Counts.d.ts" />
 
 declare module "*.html" {
   const template: string;
@@ -126,4 +128,8 @@ declare namespace Chai {
     called: SpyCalled;
     always: SpyCalledAlways;
   }
+}
+
+declare var Fake: {
+  sentence(words: number): string;
 }

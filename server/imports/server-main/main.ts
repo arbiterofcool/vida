@@ -1,5 +1,7 @@
-import {DemoCollection} from "../../../both/collections/demo.collection";
-import {Demo} from "../../../both/models/demo.model";
+import {JobCollection} from "../../../both/collections/job.collection";
+import {Job} from "../../../both/models/job.model";
+import '../publications/job.publication';
+
 
 export class Main {
   start(): void {
@@ -7,20 +9,15 @@ export class Main {
   }
 
   initFakeData(): void {
-    if (DemoCollection.find({}).cursor.count() === 0) {
-      const data: Demo[] = [{
-        name: "Dotan",
-        age: 25
-      }, {
-        name: "Liran",
-        age: 26
-      }, {
-        name: "Uri",
-        age: 30
-      }];
-      data.forEach((obj: Demo) => {
-        DemoCollection.insert(obj);
-      });
+    if (JobCollection.find({}).cursor.count() === 0) {
+      for (var i = 0; i < 27; i++) {
+        JobCollection.insert({
+          name: Fake.sentence(50),
+          location: Fake.sentence(10),
+          description: Fake.sentence(100)
+        });
+      }
     }
+
   }
 }

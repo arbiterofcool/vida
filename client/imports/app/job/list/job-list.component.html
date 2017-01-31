@@ -1,0 +1,27 @@
+<div>
+    <job-form style="float: left"></job-form>
+    <input type="text" #searchtext placeholder="Search by Location">
+    <button type="button" (click)="search(searchtext.value)">Search</button>
+
+    <login-buttons></login-buttons>
+
+    <h1>Job:</h1>
+
+    <div>
+        <select #sort (change)="changeSortOrder(sort.value)">
+            <option value="1" selected>Ascending</option>
+            <option value="-1">Descending</option>
+        </select>
+    </div>
+
+    <ul>
+        <li *ngFor="let job of jobs | async">
+            <a [routerLink]="['/job', job._id]">{{job.name}}</a>
+            <p>{{job.description}}</p>
+            <p>{{job.location}}</p>
+            <button (click)="removeJob(job)">X</button>
+        </li>
+    </ul>
+
+    <pagination-controls (pageChange)="onPageChanged($event)"></pagination-controls>
+</div>

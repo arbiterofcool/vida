@@ -1,0 +1,8 @@
+<h2>{{greeting}}</h2>
+
+This is the available data:
+<ul>
+    <li *ngFor="let job of data | async">
+        {{job.name}} ({{job.description}})
+    </li>
+</ul>
