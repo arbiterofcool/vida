@@ -1,27 +1,66 @@
-<div>
-    <job-form style="float: left"></job-form>
-    <input type="text" #searchtext placeholder="Search by Location">
-    <button type="button" (click)="search(searchtext.value)">Search</button>
+<jobs-form></jobs-form>
 
-    <login-buttons></login-buttons>
-
-    <h1>Job:</h1>
-
-    <div>
-        <select #sort (change)="changeSortOrder(sort.value)">
-            <option value="1" selected>Ascending</option>
-            <option value="-1">Descending</option>
+<div class="jobs-list-container">
+  <div class="jobs-list">
+    <md-card class="filter-card">
+      <h3>Filter Jobs</h3>
+      <form>
+        By Location: <md-input dividerColor="primary" type="text" #searchtext placeholder="Enter Location"></md-input>
+        <button md-button (click)="search(searchtext.value)">Find</button>
+        <br />
+        Sort by name:
+        <select class="form-control" #sort (change)="changeSortOrder(sort.value)">
+          <option value="1" selected>Ascending</option>
+          <option value="-1">Descending</option>
         </select>
-    </div>
+      </form>
+    </md-card>
 
-    <ul>
-        <li *ngFor="let job of jobs | async">
-            <a [routerLink]="['/job', job._id]">{{job.name}}</a>
-            <p>{{job.description}}</p>
-            <p>{{job.location}}</p>
-            <button (click)="removeJob(job)">X</button>
-        </li>
-    </ul>
+    <pagination-controls class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
 
-    <pagination-controls (pageChange)="onPageChanged($event)"></pagination-controls>
+    <md-card *ngFor="let job of jobs | async" class="job-card">
+      <h2 class="job-name">
+        <a [routerLink]="['/job', job._id]">{{job.name}}</a>
+      </h2>
+      @ {{job.location.name}}
+      <br />
+      {{job.description}}
+
+      <button class="remove-job" md-icon-button *ngIf="isOwner(job)" (click)="removeJob(job)">
+        <md-icon class="md-24">X</md-icon>
+      </button>
+
+      <div class="rsvp-container">
+        <div class="rsvps-sum">
+          <div class="rsvps-amount">{{job | rsvp:'yes'}}</div>
+          <div class="rsvps-title">Yes</div>
+        </div>
+        <div class="rsvps-sum">
+          <div class="rsvps-amount">{{job | rsvp:'maybe'}}</div>
+          <div class="rsvps-title">Maybe</div>
+        </div>
+        <div class="rsvps-sum">
+          <div class="rsvps-amount">{{job | rsvp:'no'}}</div>
+          <div class="rsvps-title">No</div>
+        </div>
+      </div>
+    </md-card>
+
+    <pagination-controls class="pagination" (pageChange)="onPageChanged($event)"></pagination-controls>
+  </div>
+  <div class="jobs-map">
+    <sebm-google-map
+            [latitude]="0"
+            [longitude]="0"
+            [zoom]="1"
+            class="google-map">
+      <div *ngFor="let job of jobs | async">
+        <sebm-google-map-marker
+                *ngIf="job.location.lat"
+                [latitude]="job.location.lat"
+                [longitude]="job.location.lng">
+        </sebm-google-map-marker>
+      </div>
+    </sebm-google-map>
+  </div>
 </div>

@@ -1,8 +1,10 @@
-.app {
-  background: lightgrey;
-  padding: 20px;
+.toolbar-title {
+  text-decoration: none;
+  color: white;
 }
 
-h1 {
-  color: navy;
+md-toolbar {
+  -webkit-box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26);
+  -moz-box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26);
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26);
 }

@@ -1,0 +1,56 @@
+<div class="job-details-container" *ngIf="job">
+  <div class="row">
+    <div class="job-details">
+      <md-card>
+        <h2>{{ job.name }}</h2>
+        <form layout="column" (submit)="saveJob()">
+          <label>Job Name: </label>
+          <md-input [disabled]="!isOwner" [(ngModel)]="job.name" name="name"></md-input>
+          <br />
+          <label>Job Description: </label>
+          <md-input [disabled]="!isOwner" [(ngModel)]="job.description" name="description"></md-input>
+          <br />
+          <label>Location name: </label>
+          <md-input [disabled]="!isOwner" [(ngModel)]="job.location.name" name="location"></md-input>
+          <br />
+          <md-checkbox [disabled]="!isOwner" [(checked)]="job.open" name="open" aria-label="Open">
+            Open job?
+          </md-checkbox>
+
+          <div layout="row" layout-align="left">
+            <button [disabled]="!isOwner" type="submit" md-raised-button color="accent">Save</button>
+            <a [routerLink]="['/']" md-raised-button class="md-raised">Back</a>
+          </div>
+        </form>
+      </md-card>
+    </div>
+    <div class="job-invites">
+      <md-card>
+        <h2>Invitations</h2>
+        <span [hidden]="!job.open">Open job, no need for invitations!</span>
+        <md-list>
+          <md-list-item *ngFor="let user of users | async">
+            <div>{{ user | displayName }}</div>
+            <button (click)="invite(user)" md-raised-button>Invite</button>
+          </md-list-item>
+        </md-list>
+      </md-card>
+    </div>
+    <div class="job-map">
+      <md-card>
+        <h2>Job location</h2>
+        <sebm-google-map
+                [latitude]="lat || centerLat"
+                [longitude]="lng || centerLng"
+                [zoom]="8"
+                (mapClick)="mapClicked($event)">
+          <sebm-google-map-marker
+                  *ngIf="lat && lng"
+                  [latitude]="lat"
+                  [longitude]="lng">
+          </sebm-google-map-marker>
+        </sebm-google-map>
+      </md-card>
+    </div>
+  </div>
+</div>

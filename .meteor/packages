@@ -23,3 +23,8 @@ shell-server@0.2.1
 accounts-password
 tmeasday:publish-counts
 anti:fake
+check
+email
+jalik:ufs
+jalik:ufs-gridfs
+edgee:slingshot

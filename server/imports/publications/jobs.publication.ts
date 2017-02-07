@@ -8,6 +8,7 @@ interface Options {
 }
 
 Meteor.publish('jobs', function(options: Options, location?: string) {
+  // return JobCollection.find({});
   const selector = buildQuery.call(this, null, location);
 
   Counts.publish(this, 'numberOfJobs', JobCollection.collection.find(selector), { noReady: true });
@@ -15,7 +16,7 @@ Meteor.publish('jobs', function(options: Options, location?: string) {
   return JobCollection.find(selector, options);
 });
 
-Meteor.publish('jobs', function(jobId: string) {
+Meteor.publish('job', function(jobId: string) {
   return JobCollection.find(buildQuery.call(this, jobId));
 });
 
@@ -24,7 +25,7 @@ function buildQuery(jobId?: string, location?: string): Object {
   const isAvailable = {
     $or: [{
       // job is public
-      public: true
+      open: true
     },
       // or
       {
@@ -36,6 +37,12 @@ function buildQuery(jobId?: string, location?: string): Object {
             $exists: true
           }
         }]
+      },
+      {
+        $and: [
+          {invited: this.userId},
+          {invited: {$exists: true}}
+        ]
       }]
   };
 
@@ -54,7 +61,7 @@ function buildQuery(jobId?: string, location?: string): Object {
 
   return {
     $and: [{
-      location: searchRegEx
+      'location.name': searchRegEx
     },
       isAvailable
     ]

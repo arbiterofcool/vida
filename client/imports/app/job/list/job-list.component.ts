@@ -5,11 +5,13 @@ import { Subscription } from 'rxjs/Subscription';
 import { MeteorObservable } from 'meteor-rxjs';
 import { PaginationService } from 'ng2-pagination';
 import { Counts } from 'meteor/tmeasday:publish-counts';
+import { InjectUser } from "angular2-meteor-accounts-ui";
 
 import 'rxjs/add/operator/combineLatest';
 
 
-import template from './job-list.component.html';
+import template from './parties-list.component.html';
+import style from './parties-list.component.scss';
 import {Job} from "../../../../../both/models/job.model";
 import {JobCollection} from "../../../../../both/collections/job.collection";
 
@@ -23,25 +25,29 @@ interface Options extends Pagination {
 }
 
 @Component({
-  selector: 'job-list',
-  template
+  selector: 'jobs-list',
+  template,
+  styles: [ style ]
 })
+@InjectUser('user')
 export class JobListComponent implements OnInit, OnDestroy {
-  jobs: Observable<Job[]>;
-  jobSub: Subscription;
+  parties: Observable<Job[]>;
+  partiesSub: Subscription;
   pageSize: Subject<number> = new Subject<number>();
   curPage: Subject<number> = new Subject<number>();
   nameOrder: Subject<number> = new Subject<number>();
   optionsSub: Subscription;
-  jobSize: number = 0;
+  partiesSize: number = 0;
   autorunSub: Subscription;
   location: Subject<string> = new Subject<string>();
+  user: Meteor.User;
 
   constructor(
     private paginationService: PaginationService
   ) {}
 
   ngOnInit() {
+
     this.optionsSub = Observable.combineLatest(
       this.pageSize,
       this.curPage,
@@ -56,12 +62,12 @@ export class JobListComponent implements OnInit, OnDestroy {
 
       this.paginationService.setCurrentPage(this.paginationService.defaultId(), curPage as number);
 
-      if (this.jobSub) {
-        this.jobSub.unsubscribe();
+      if (this.partiesSub) {
+        this.partiesSub.unsubscribe();
       }
 
-      this.jobSub = MeteorObservable.subscribe('jobs', options, location).subscribe(() => {
-        this.jobs = JobCollection.find({}, {
+      this.partiesSub = MeteorObservable.subscribe('parties', options, location).subscribe(() => {
+        this.parties = JobCollection.find({}, {
           sort: {
             name: nameOrder
           }
@@ -73,7 +79,7 @@ export class JobListComponent implements OnInit, OnDestroy {
       id: this.paginationService.defaultId(),
       itemsPerPage: 10,
       currentPage: 1,
-      totalItems: this.jobSize
+      totalItems: this.partiesSize
     });
 
     this.pageSize.next(10);
@@ -82,8 +88,8 @@ export class JobListComponent implements OnInit, OnDestroy {
     this.location.next('');
 
     this.autorunSub = MeteorObservable.autorun().subscribe(() => {
-      this.jobSize = Counts.get('numberOfJob');
-      this.paginationService.setTotalItems(this.paginationService.defaultId(), this.jobSize);
+      this.partiesSize = Counts.get('numberOfJobCollection');
+      this.paginationService.setTotalItems(this.paginationService.defaultId(), this.partiesSize);
     });
   }
 
@@ -104,8 +110,12 @@ export class JobListComponent implements OnInit, OnDestroy {
     this.nameOrder.next(parseInt(nameOrder));
   }
 
+  isOwner(job: Job): boolean {
+    return this.user && this.user._id === job.owner;
+  }
+
   ngOnDestroy() {
-    this.jobSub.unsubscribe();
+    this.partiesSub.unsubscribe();
     this.optionsSub.unsubscribe();
     this.autorunSub.unsubscribe();
   }

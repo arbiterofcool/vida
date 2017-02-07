@@ -1,12 +1,19 @@
 import { Route } from '@angular/router';
 import {JobListComponent} from "./job/list/job-list.component";
-import {JobDetailComponent} from "./job/detail/job-detail.component";
+import {JobDetailsComponent} from "./job/detail/job-details.component";
 import {Meteor} from 'meteor/meteor';
+import {SignupComponent} from "./auth/signup.component";
+import {RecoverComponent} from "./auth/recover.component";
+import {MobileLoginComponent} from "./auth/login.component.mobile";
+import {LoginComponent} from "./auth/login.component.web";
 
 
 export const routes: Route[] = [
   { path: '', component: JobListComponent },
-  { path: 'job:jobId', component: JobDetailComponent, canActivate: ['canActivateForLoggedIn'] }
+  { path: 'job/:jobId', component: JobDetailsComponent, canActivate: ['canActivateForLoggedIn'] },
+  { path: 'login', component: Meteor.isCordova ? MobileLoginComponent : LoginComponent },
+  { path: 'signup', component: SignupComponent },
+  { path: 'recover', component: RecoverComponent }
 ];
 
 export const ROUTES_PROVIDERS = [{

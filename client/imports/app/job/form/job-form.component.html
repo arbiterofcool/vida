@@ -1,8 +1,42 @@
-<h2>{{greeting}}</h2>
-
-This is the available data:
-<ul>
-    <li *ngFor="let job of data | async">
-        {{job.name}} ({{job.description}})
-    </li>
-</ul>
+<div class="form-container">
+  <div class="container-background">
+    <div class="form-content">
+      <div class="form-center">
+        <h1>Your job is missing?</h1>
+        <h2>Add it now! ></h2>
+      </div>
+      <div class="form-center">
+        <form *ngIf="user" [formGroup]="addForm" (ngSubmit)="addJob(); upload.reset();">
+          <div style="display: table-row">
+            <div class="form-inputs">
+              <md-input dividerColor="accent" formControlName="name" placeholder="Job name"></md-input>
+              <br/>
+              <md-input dividerColor="accent" formControlName="description" placeholder="Description"></md-input>
+              <br/>
+              <md-input dividerColor="accent" formControlName="location" placeholder="Location name"></md-input>
+              <br/>
+              <md-checkbox formControlName="open">Open job?</md-checkbox>
+              <br/><br/>
+              <button color="accent" md-raised-button type="submit">Add my job!</button>
+            </div>
+            <div class="form-extras">
+              <sebm-google-map class="new-job-map"
+                               [latitude]="newJobPosition.lat"
+                               [longitude]="newJobPosition.lng"
+                               [zoom]="8"
+                               (mapClick)="mapClicked($event)">
+                <sebm-google-map-marker
+                        [latitude]="newJobPosition.lat"
+                        [longitude]="newJobPosition.lng">
+                </sebm-google-map-marker>
+              </sebm-google-map>
+            </div>
+          </div>
+        </form>
+        <div *ngIf="!user">
+          Please login in order to create new jobs!
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

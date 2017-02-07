@@ -9,20 +9,26 @@ import {JOB_SERVICE_DECLARATIONS, JOB_COMPONENT_DECLARATIONS} from "./job/index"
 import {USER_COMPONENT_DECLARATIONS} from "./user/index";
 import { AccountsModule } from 'angular2-meteor-accounts-ui';
 import { Ng2PaginationModule } from 'ng2-pagination';
-
+import {SHARED_DECLARATIONS} from "./shared/index";
+import { AgmCoreModule } from 'angular2-google-maps/core';
+import { MaterialModule } from '@angular/material'
+import {AUTH_DECLARATIONS} from "./auth/index";
 
 @NgModule({
   // Components, Pipes, Directive
   declarations: [
     AppComponent,
     ...JOB_COMPONENT_DECLARATIONS,
-    ...USER_COMPONENT_DECLARATIONS
+    ...USER_COMPONENT_DECLARATIONS,
+    ...SHARED_DECLARATIONS,
+    ...AUTH_DECLARATIONS
   ],
   // Entry Components
   entryComponents: [
     AppComponent,
     ...JOB_COMPONENT_DECLARATIONS,
-    ...USER_COMPONENT_DECLARATIONS
+    ...USER_COMPONENT_DECLARATIONS,
+    ...AUTH_DECLARATIONS
   ],
   // Providers
   providers: [
@@ -37,7 +43,11 @@ import { Ng2PaginationModule } from 'ng2-pagination';
     FormsModule,
     RouterModule.forRoot(routes),
     AccountsModule,
-    Ng2PaginationModule
+    Ng2PaginationModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAWoBdZHCNh5R-hB5S5ZZ2oeoYyfdDgniA'
+    }),
+    MaterialModule.forRoot()
   ],
   // Main Component
   bootstrap: [ AppComponent ]
