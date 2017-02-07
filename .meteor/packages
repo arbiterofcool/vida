@@ -25,6 +25,3 @@ tmeasday:publish-counts
 anti:fake
 check
 email
-jalik:ufs
-jalik:ufs-gridfs
-edgee:slingshot
