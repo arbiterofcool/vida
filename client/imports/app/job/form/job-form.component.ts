@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { InjectUser } from "angular2-meteor-accounts-ui";
-import template from './jobs-form.component.html';
-import style from './jobs-form.component.scss';
+import template from './job-form.component.html';
+import style from './job-form.component.scss';
 import {JobCollection} from "../../../../../both/collections/job.collection";
 
 @Component({
-  selector: 'jobs-form',
+  selector: 'job-form',
   template,
   styles: [ style ]
 })

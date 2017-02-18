@@ -79,3 +79,4 @@ There is a main test file that initialize Angular 2 tests library, it located un
 All other test files are located near the component/service it tests, with the `.test.ts` extension.
 
 The `DemoComponent` contains example for Angular 2 tests for Component, and in the server side there is an example for testing Meteor collections and stub data.
+

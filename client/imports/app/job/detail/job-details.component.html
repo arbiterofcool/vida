@@ -1,56 +1,42 @@
-<div class="job-details-container" *ngIf="job">
-  <div class="row">
-    <div class="job-details">
-      <md-card>
-        <h2>{{ job.name }}</h2>
-        <form layout="column" (submit)="saveJob()">
-          <label>Job Name: </label>
-          <md-input [disabled]="!isOwner" [(ngModel)]="job.name" name="name"></md-input>
-          <br />
-          <label>Job Description: </label>
-          <md-input [disabled]="!isOwner" [(ngModel)]="job.description" name="description"></md-input>
-          <br />
-          <label>Location name: </label>
-          <md-input [disabled]="!isOwner" [(ngModel)]="job.location.name" name="location"></md-input>
-          <br />
-          <md-checkbox [disabled]="!isOwner" [(checked)]="job.open" name="open" aria-label="Open">
-            Open job?
-          </md-checkbox>
+<form *ngIf="job" (submit)="saveJob()">
+    <label>Name</label>
+    <input [disabled]="!isOwner" type="text" [(ngModel)]="job.name" name="name">
 
-          <div layout="row" layout-align="left">
-            <button [disabled]="!isOwner" type="submit" md-raised-button color="accent">Save</button>
-            <a [routerLink]="['/']" md-raised-button class="md-raised">Back</a>
-          </div>
-        </form>
-      </md-card>
-    </div>
-    <div class="job-invites">
-      <md-card>
-        <h2>Invitations</h2>
-        <span [hidden]="!job.open">Open job, no need for invitations!</span>
-        <md-list>
-          <md-list-item *ngFor="let user of users | async">
-            <div>{{ user | displayName }}</div>
-            <button (click)="invite(user)" md-raised-button>Invite</button>
-          </md-list-item>
-        </md-list>
-      </md-card>
-    </div>
-    <div class="job-map">
-      <md-card>
-        <h2>Job location</h2>
-        <sebm-google-map
-                [latitude]="lat || centerLat"
-                [longitude]="lng || centerLng"
-                [zoom]="8"
-                (mapClick)="mapClicked($event)">
-          <sebm-google-map-marker
-                  *ngIf="lat && lng"
-                  [latitude]="lat"
-                  [longitude]="lng">
-          </sebm-google-map-marker>
-        </sebm-google-map>
-      </md-card>
-    </div>
-  </div>
+    <label>Description</label>
+    <input [disabled]="!isOwner" type="text" [(ngModel)]="job.description" name="description">
+
+    <label>Location</label>
+    <input [disabled]="!isOwner" type="text" [(ngModel)]="job.location.name" name="location">
+
+    <button [disabled]="!isOwner" type="submit">Save</button>
+    <a [routerLink]="['/']">Cancel</a>
+</form>
+
+<div *ngIf="isOwner || isPublic">
+    <p>Users to invite:</p>
+    <ul>
+        <li *ngFor="let user of users | async">
+            <div>{{user | displayName}}</div>
+            <button (click)="invite(user)">Invite</button>
+        </li>
+    </ul>
 </div>
+
+<div *ngIf="isInvited">
+    <h2>Reply to the invitation</h2>
+    <input type="button" value="I'm going!" (click)="reply('yes')">
+    <input type="button" value="Maybe" (click)="reply('maybe')">
+    <input type="button" value="No" (click)="reply('no')">
+</div>
+
+<sebm-google-map
+    [latitude]="lat || centerLat"
+    [longitude]="lng || centerLng"
+    [zoom]="8"
+    (mapClick)="mapClicked($event)">
+    <sebm-google-map-marker
+            *ngIf="lat && lng"
+            [latitude]="lat"
+            [longitude]="lng">
+    </sebm-google-map-marker>
+</sebm-google-map>

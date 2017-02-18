@@ -11,8 +11,8 @@ import { AccountsModule } from 'angular2-meteor-accounts-ui';
 import { Ng2PaginationModule } from 'ng2-pagination';
 import {SHARED_DECLARATIONS} from "./shared/index";
 import { AgmCoreModule } from 'angular2-google-maps/core';
-import { MaterialModule } from '@angular/material'
 import {AUTH_DECLARATIONS} from "./auth/index";
+import {LandingComponent} from "./landing/landing.component";
 
 @NgModule({
   // Components, Pipes, Directive
@@ -21,14 +21,16 @@ import {AUTH_DECLARATIONS} from "./auth/index";
     ...JOB_COMPONENT_DECLARATIONS,
     ...USER_COMPONENT_DECLARATIONS,
     ...SHARED_DECLARATIONS,
-    ...AUTH_DECLARATIONS
+    ...AUTH_DECLARATIONS,
+    LandingComponent
   ],
   // Entry Components
   entryComponents: [
     AppComponent,
     ...JOB_COMPONENT_DECLARATIONS,
     ...USER_COMPONENT_DECLARATIONS,
-    ...AUTH_DECLARATIONS
+    ...AUTH_DECLARATIONS,
+    LandingComponent
   ],
   // Providers
   providers: [
@@ -46,8 +48,7 @@ import {AUTH_DECLARATIONS} from "./auth/index";
     Ng2PaginationModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAWoBdZHCNh5R-hB5S5ZZ2oeoYyfdDgniA'
-    }),
-    MaterialModule.forRoot()
+    })
   ],
   // Main Component
   bootstrap: [ AppComponent ]

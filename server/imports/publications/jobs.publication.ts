@@ -8,7 +8,6 @@ interface Options {
 }
 
 Meteor.publish('jobs', function(options: Options, location?: string) {
-  // return JobCollection.find({});
   const selector = buildQuery.call(this, null, location);
 
   Counts.publish(this, 'numberOfJobs', JobCollection.collection.find(selector), { noReady: true });

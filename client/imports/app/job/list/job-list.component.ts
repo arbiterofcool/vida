@@ -10,8 +10,8 @@ import { InjectUser } from "angular2-meteor-accounts-ui";
 import 'rxjs/add/operator/combineLatest';
 
 
-import template from './parties-list.component.html';
-import style from './parties-list.component.scss';
+import template from './job-list.component.html';
+import style from './job-list.component.scss';
 import {Job} from "../../../../../both/models/job.model";
 import {JobCollection} from "../../../../../both/collections/job.collection";
 
@@ -25,19 +25,19 @@ interface Options extends Pagination {
 }
 
 @Component({
-  selector: 'jobs-list',
+  selector: 'job-list',
   template,
   styles: [ style ]
 })
 @InjectUser('user')
 export class JobListComponent implements OnInit, OnDestroy {
-  parties: Observable<Job[]>;
-  partiesSub: Subscription;
+  job: Observable<Job[]>;
+  jobSub: Subscription;
   pageSize: Subject<number> = new Subject<number>();
   curPage: Subject<number> = new Subject<number>();
   nameOrder: Subject<number> = new Subject<number>();
   optionsSub: Subscription;
-  partiesSize: number = 0;
+  jobSize: number = 0;
   autorunSub: Subscription;
   location: Subject<string> = new Subject<string>();
   user: Meteor.User;
@@ -62,12 +62,12 @@ export class JobListComponent implements OnInit, OnDestroy {
 
       this.paginationService.setCurrentPage(this.paginationService.defaultId(), curPage as number);
 
-      if (this.partiesSub) {
-        this.partiesSub.unsubscribe();
+      if (this.jobSub) {
+        this.jobSub.unsubscribe();
       }
 
-      this.partiesSub = MeteorObservable.subscribe('parties', options, location).subscribe(() => {
-        this.parties = JobCollection.find({}, {
+      this.jobSub = MeteorObservable.subscribe('job', options, location).subscribe(() => {
+        this.job = JobCollection.find({}, {
           sort: {
             name: nameOrder
           }
@@ -79,7 +79,7 @@ export class JobListComponent implements OnInit, OnDestroy {
       id: this.paginationService.defaultId(),
       itemsPerPage: 10,
       currentPage: 1,
-      totalItems: this.partiesSize
+      totalItems: this.jobSize
     });
 
     this.pageSize.next(10);
@@ -88,8 +88,8 @@ export class JobListComponent implements OnInit, OnDestroy {
     this.location.next('');
 
     this.autorunSub = MeteorObservable.autorun().subscribe(() => {
-      this.partiesSize = Counts.get('numberOfJobCollection');
-      this.paginationService.setTotalItems(this.paginationService.defaultId(), this.partiesSize);
+      this.jobSize = Counts.get('numberOfJobs');
+      this.paginationService.setTotalItems(this.paginationService.defaultId(), this.jobSize);
     });
   }
 
@@ -115,7 +115,7 @@ export class JobListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.partiesSub.unsubscribe();
+    this.jobSub.unsubscribe();
     this.optionsSub.unsubscribe();
     this.autorunSub.unsubscribe();
   }

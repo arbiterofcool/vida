@@ -1,24 +1,113 @@
-@import '../node_modules/@angular/material/core/theming/all-theme';
-
-@include md-core();
-$app-primary: md-palette($md-light-blue, 500, 100, 700);
-$app-accent:  md-palette($md-pink, A200, A100, A400);
-$app-warn:    md-palette($md-red);
-$app-theme:   md-light-theme($app-primary, $app-accent, $app-warn);
-@include angular-material-theme($app-theme);
+@import url(https://fonts.googleapis.com/css?family=Quicksand);
 
 .fill-remaining-space {
   flex: 1 1 auto;
 }
 
 body {
-  background-color: #f8f8f8;
-  font-family: 'Multi', sans-serif;
-  padding: 0;
-  margin: 0;
+  //background-color: #f8f8f8;
+  //font-family: 'Multi', sans-serif;
+  //padding: 0;
+  //margin: 0;
+
+
 }
 
 .sebm-google-map-container {
   width: 450px;
   height: 450px;
+}
+
+
+.landing-container {
+  width: 100%;
+  height: 700px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  text-align: center;
+  background:
+          /* top, transparent red, faked with gradient */
+          linear-gradient(
+                          rgba(0, 0, 0, 0.45),
+                          rgba(0, 0, 0, 0.15)
+          ),
+            /* bottom, image */
+          url("https://upload.wikimedia.org/wikipedia/commons/e/e3/Banana_farm.jpg");
+  background-repeat: no-repeat;
+  background-position: 50%;
+  background-size: cover;
+  font-family: Quicksand;
+}
+
+h1 {
+  font-size: 74px;
+  letter-spacing: 2px;
+  font-style: normal;
+  text-shadow: 0 0 2px rgba(0,0,0,.6);
+  font-weight: 300;
+  color: white;
+  margin: 0px;
+}
+
+p {
+  font-size: 30px;
+  letter-spacing: 0.5px;
+  font-style: normal;
+  text-shadow: 0 0 2px rgba(0,0,0,.6);
+  font-weight: 300;
+  color: white;
+}
+
+form {
+  display: flex;
+  max-width: 540px;
+  width: 100%;
+}
+
+input {
+  font-weight: 400;
+  font-style: normal;
+  font-size: 24px;
+
+  height: 50px;
+  width: 100%;
+  padding-left: 5%;
+
+  border-radius: 0;
+
+  border: solid 1px white;
+  border-right: 0px;
+  background-color: rgba(0,0,0,.3);
+  color: white;
+  outline: 0 !important;
+  font-family: Quicksand;
+}
+
+input-border-landing
+
+input:-ms-input-placeholder {
+  color: white;
+}
+
+input:-moz-placeholder {
+  color: white;
+}
+
+input::-webkit-input-placeholder {
+  color: white;
+}
+
+button {
+  font-size: 34px;
+  width: 53px;
+  border-width: 0px;
+  background-color: #36454f;
+  font-family: Quicksand;
+  color: white;
+  padding: 4px;
+  border: solid 1px;
+  border-left: 0;
 }

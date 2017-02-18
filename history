@@ -1,0 +1,51 @@
+ 8144  meteor npm install --save meteor-rxjs angular2-meteor-polyfills @angular
+ 8145  meteor npm install --save meteor-rxjs
+ 8146  ls
+ 8147  cat package.json
+ 8148  meteor npm install
+ 8149  meteor
+ 8151  meteor npm install angular2-meteor-accounts-ui
+ 8152  meteor npm install --save angular2-meteor-accounts-ui
+ 8153  meteor add accounts-password
+ 8154  meteor npm install --save bcrypt
+ 8156  meteor remove insecure
+ 8157  meteor add accounts-password
+ 8158  meteor npm install --save angular2-meteor-accounts-ui
+ 8159  meteor add publish-counts
+ 8160  meteor add tmeasday:publish-counts
+ 8161  meteor npm install ng2-pagination --save
+ 8163  typings install registry:env/meteor --global
+ 8164  typings install github:meteor-typings/angular2-compilers#c2ca3d3036b08f04a22b98ed16ff17377499e1e7 --global
+ 8165  hgr meteor
+ 8166  meteor add anti:fake
+ 8167  mongo reset
+ 8168  meteor reset
+ 8169  meteor remove autopublish
+ 8170  ls
+ 8171  meteor reset
+ 8172  meteor add check
+ 8173  meteor add email
+ 8174  ls
+ 8175  cd ..
+ 8176  ls
+ 8177  cd Downloads
+ 8178  ls
+ 8179* cd ../dev/FEWD_SM_26
+ 8180* git pull
+ 8181  meteor reset
+ 8182  meteor npm install angular2-google-maps --save
+ 8183  meteor reset
+ 8184  meteor npm install --save bootstrap@4.0.0-alpha.3
+ 8185  meteor npm uninstall --save bootstrap
+ 8186  meteor npm install @angular/material@2.0.0-alpha.9
+ 8187  meteor npm install @angular/material@2.0.0-alpha.9 --save
+ 8188  cp ../meteor-angular2.0-socially-step22 .
+ 8189  cp -r ../meteor-angular2.0-socially-step22 .
+ 8190  ls
+ 8191  meteor add jalik:ufs
+ 8192  meteor add jalik:ufs-gridfs
+ 8193  meteor npm install --save gm
+ 8194  meteor add edgee:slingshot
+ 8195  meteor npm install --save angular2-file-drop
+ 8196  meteor npm install --save spawn-sync @angular
+ 8197  meteor npm install --save @angular
